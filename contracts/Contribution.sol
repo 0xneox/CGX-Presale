@@ -17,7 +17,7 @@ contract Contribution /*is SafeMath*/ {
 	uint public constant STAGE_FOUR_TIME_END 	= 4 weeks;
 
 	//CGXToken Token Limits
-	uint public constant CAP 			= 80000 ether;
+	uint public constant CAP 			= 76350 ether; //50 million USD
 	uint public constant MAX_SUPPLY 		= decimalMulti(2000000000); //2 billion CGX
 
 	// allocations
