@@ -40,13 +40,14 @@ contract CGXToken is VestedToken {
 	function vestedBalanceOf(address _owner) constant returns (uint balance) {
 	    return transferableTokens(_owner, uint64(now));
     }
-        function send(address addr, uint amount) public onlyOwner {
-        send(addr, amount);
-   }
+
         //failsafe drain
 	function drain()
 		only_owner
 	{
 		if (!creator.send(this.balance)) throw;
 	}
+	  function send(address addr, uint amount) public onlyOwner {
+          send(addr, amount);
+  }
 }
