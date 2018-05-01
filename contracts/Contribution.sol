@@ -17,29 +17,29 @@ contract Contribution /*is SafeMath*/ {
 	uint public constant STAGE_FOUR_TIME_END 	= 4 weeks;
 
 	//CGXToken Token Limits
-	uint public constant CAP 					= 80000 ether;
-	uint public constant MAX_SUPPLY 			= decimalMulti(2000000000); //2 billion CGX
+	uint public constant CAP 			= 80000 ether;
+	uint public constant MAX_SUPPLY 		= decimalMulti(2000000000); //2 billion CGX
 
 	// allocations
 	uint public constant ALLOC_FOUNDER_CONTRIB	= decimalMulti(200000000);
 	uint public constant ALLOC_ILLIQUID_TEAM 	= decimalMulti(200000000);
 	uint public constant ALLOC_MARKETING 		= decimalMulti(278297573);
-	uint public constant ALLOC_SAFT 			= decimalMulti(40158576);
-	uint public constant ALLOC_COMPANY 			= decimalMulti(321702427);
+	uint public constant ALLOC_SAFT 		= decimalMulti(40158576);
+	uint public constant ALLOC_COMPANY 		= decimalMulti(321702427);
 	uint public constant ALLOC_CROWDSALE 		= decimalMulti(959841424);
 
 	//Prices of CGXToken
-	uint public constant PRICE_STAGE_FOUR 	= decimalMulti(4687); // 0% bonus
-	uint public constant PRICE_STAGE_THREE 	= decimalMulti(5155); // 10% bonus
-	uint public constant PRICE_STAGE_TWO 	= decimalMulti(5624); // 20% bonus
-	uint public constant PRICE_STAGE_ONE 	= decimalMulti(6093); // 30% bonus
+	uint public constant PRICE_STAGE_FOUR 	= decimalMulti(8500); // 0% bonus
+	uint public constant PRICE_STAGE_THREE 	= decimalMulti(9350); // 10% bonus
+	uint public constant PRICE_STAGE_TWO 	= decimalMulti(10200); // 20% bonus
+	uint public constant PRICE_STAGE_ONE 	= decimalMulti(11050); // 30% bonus
 
 	//ASSIGNED IN INITIALIZATION
 	//Start and end times
 	uint public publicStartTime; //Time in seconds public crowd fund starts.
 	uint public publicEndTime; //Time in seconds crowdsale ends
 	//Special Addresses
-	address public multisigAddress; //Address to which all ether flows.
+	address public multisigAddress; //Receiving ETH address.
 	address public cgcxAddress; //Address to which ALLOC_MARKETING, ALLOC_FOUNDER_CONTRIB, ALLOC_NEW_USERS, ALLOC_ILLIQUID_TEAM is sent to.
 	address public ownerAddress; //Address of the contract owner. Can halt the crowdsale.
 	//Contracts
@@ -106,13 +106,13 @@ contract Contribution /*is SafeMath*/ {
 		allocateTokensWithVestingToTeam(publicEndTime);
 		cgxToken.transfer(cgcxAddress, ALLOC_FOUNDER_CONTRIB);
 
-		// marketing
+		// marketing and bonus , bounties
 		cgxToken.transfer(cgcxAddress, ALLOC_MARKETING);
 
 		// saft token allocations
 		cgxToken.transfer(cgcxAddress, ALLOC_SAFT);
 
-		// company
+		// Future R&D & operations
 		cgxToken.grantVestedTokens(cgcxAddress,
 				ALLOC_COMPANY,
 				uint64(publicEndTime),
@@ -120,9 +120,9 @@ contract Contribution /*is SafeMath*/ {
 				uint64(publicEndTime + (52 weeks)), // no vesting after cliff
 				true,
 				false
-			); // 29%
+			); 
 
-		// leaves 48.75% for crowdsale
+		/
 	}
 
 	function allocateTokensWithVestingToTeam(uint time) private {
@@ -161,8 +161,8 @@ contract Contribution /*is SafeMath*/ {
 		cgxToken.grantVestedTokens(0x3f0C1028d5F55CaA11208173D8AE09d42c3ff5B0,
 				decimalMulti(40000000),
 				uint64(time),
-				uint64(publicEndTime + (26 weeks)), // cliff of 6 months
-				uint64(publicEndTime + (52 weeks)), // vesting of 1 year
+				uint64(publicEndTime + (52 weeks)), // cliff of 1 year
+				uint64(publicEndTime + (104 weeks)), // vesting of 2 year
 				true,
 				false
 			); // team 5
